@@ -9,10 +9,10 @@
   type="text"
   placeholder="Search Name"
   [(ngModel)]="filters.name"
-  (keyup)="applyFilters()"
+  
 />
 
-<select [(ngModel)]="filters.status" (change)="applyFilters()">
+<select [(ngModel)]="filters.status" >
   <option value="">All Status</option>
   <option value="ACTIVE">Active</option>
   <option value="INACTIVE">Inactive</option>
@@ -22,22 +22,32 @@
   type="number"
   placeholder="Department ID"
   [(ngModel)]="filters.departmentId"
-  (keyup)="applyFilters()"
+  
 />
 
 <input
   type="number"
   placeholder="Min Salary"
   [(ngModel)]="filters.minSalary"
-  (change)="applyFilters()"
+  
 />
 
 <input
   type="number"
   placeholder="Max Salary"
   [(ngModel)]="filters.maxSalary"
-  (change)="applyFilters()"
+  
 />
+
+<div class="filter-actions">
+  <button type="button" (click)="applyFilters()">
+    Apply Filter
+  </button>
+
+  <button type="button" class="reset-btn" (click)="resetFilter()">
+    Reset
+  </button>
+</div>
 
 
   </div>

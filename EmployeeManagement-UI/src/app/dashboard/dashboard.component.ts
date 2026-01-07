@@ -15,15 +15,15 @@ export class DashboardComponent implements OnInit {
   pageSize = 5;
   totalElements = 0;
   totalPages = 0;
-  
 
- filters = {
-  name: '',
-  status: '',
-  departmentId: '',
-  minSalary: '',
-  maxSalary: ''
-};
+  // ✅ SINGLE FILTER OBJECT
+  filters = {
+    name: '',
+    status: '',
+    departmentId: null,
+    minSalary: null,
+    maxSalary: null
+  };
 
   constructor(private employeeService: EmployeeService) {}
 
@@ -32,8 +32,9 @@ export class DashboardComponent implements OnInit {
   }
 
   selectEmployee(emp: any) {
-  this.selectedEmployee = emp;
-}
+    this.selectedEmployee = emp;
+  }
+
   loadEmployees(): void {
     this.employeeService
       .getEmployees(this.pageIndex, this.pageSize, this.filters)
@@ -44,17 +45,32 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  applyFilters(): void {
+    this.pageIndex = 0;
+    this.selectedEmployee = null;
+    this.loadEmployees();
+  }
+
+  resetFilter(): void {
+    this.filters = {
+      name: '',
+      status: '',
+      departmentId: null,
+      minSalary: null,
+      maxSalary: null
+    };
+
+    this.pageIndex = 0;
+    this.selectedEmployee = null;
+    this.loadEmployees();
+  }
+
   nextPage(): void {
     if (this.pageIndex + 1 < this.totalPages) {
       this.pageIndex++;
       this.loadEmployees();
     }
   }
-
-  applyFilters(): void {
-  this.pageIndex = 0;   
-  this.loadEmployees();
-}
 
   prevPage(): void {
     if (this.pageIndex > 0) {

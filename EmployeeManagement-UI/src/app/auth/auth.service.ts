@@ -17,9 +17,30 @@ export class AuthService {
     });
   }
 
-  storeToken(token: string): void {
-    localStorage.setItem('access_token', token);
+  refreshToken() {
+  const refreshToken = localStorage.getItem('refresh_token');
+
+  return this.http.post<any>(
+    'http://localhost:8282/auth/refresh',
+    { refreshToken }
+  );
+}
+
+  storeToken(token: any): void {
+  // Handle Keycloak-style response
+  const accessToken = token.access_token ?? token.accessToken;
+  const refreshToken = token.refresh_token ?? token.refreshToken;
+  const expiresIn = token.expires_in ?? token.expiresIn;
+
+  if (!accessToken || !refreshToken) {
+    console.error('Invalid token response:', token);
+    return;
   }
+
+  localStorage.setItem('access_token', accessToken);
+  localStorage.setItem('refresh_token', refreshToken);
+  localStorage.setItem('expires_in', expiresIn?.toString() ?? '');
+}
 
   getToken(): string|null{
     return localStorage.getItem('access_token');
@@ -27,7 +48,9 @@ export class AuthService {
 
   logout():void{
     localStorage.removeItem('access_token');
-     this.router.navigate(['/login']);
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('expires_in');
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn():boolean{

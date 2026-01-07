@@ -16,7 +16,7 @@ export class EmployeeService {
     .set('page', page.toString())
     .set('size', size.toString());
 
-  if (filters.name) {
+  if (filters.name && filters.name.trim() !== '') {
     params = params.set('name', filters.name);
   }
 
@@ -24,20 +24,21 @@ export class EmployeeService {
     params = params.set('status', filters.status);
   }
 
-  if (filters.departmentId) {
+  if (filters.departmentId !== null && filters.departmentId !== undefined) {
     params = params.set('departmentId', filters.departmentId.toString());
   }
 
-  if (filters.minSalary !== '') {
-  params = params.set('minSalary', Number(filters.minSalary).toString());
+  if (filters.minSalary !== null && filters.minSalary !== undefined) {
+    params = params.set('minSalary', filters.minSalary.toString());
   }
 
-  if (filters.maxSalary !== '') {
-  params = params.set('maxSalary', Number(filters.maxSalary).toString());
+  if (filters.maxSalary !== null && filters.maxSalary !== undefined) {
+    params = params.set('maxSalary', filters.maxSalary.toString());
   }
 
   return this.http.get<any>(this.baseUrl, { params });
 }
+
 
   createEmployee(employee: any) {
     return this.http.post(this.baseUrl, employee);

@@ -1,6 +1,7 @@
 package com.example.EmployeeManagementSystem.controller;
 
 import com.example.EmployeeManagementSystem.dto.LoginRequestDTO;
+import com.example.EmployeeManagementSystem.dto.RefreshTokenRequestDTO;
 import com.example.EmployeeManagementSystem.dto.TokenResponseDTO;
 import com.example.EmployeeManagementSystem.service.TokenService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,14 @@ public class AuthController {
                         loginRequest.getUsername(),
                         loginRequest.getPassword()
                 );
+
+        return ResponseEntity.ok(token);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<TokenResponseDTO> refresh(@RequestBody RefreshTokenRequestDTO request){
+
+        TokenResponseDTO token = tokenService.refreshToken(request.getRefreshToken());
 
         return ResponseEntity.ok(token);
     }

@@ -1,62 +1,125 @@
+<app-navbar></app-navbar>
+
 <h2>Add Employee</h2>
 
-<form #employeeForm="ngForm" (ngSubmit)="onSubmit()">
+<form #employeeForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
 
+  <!-- First Name -->
   <label>First Name</label>
-  <input type="text"
-         name="firstName"
-         [(ngModel)]="employee.firstName"
-         required />
+  <input
+    type="text"
+    name="firstName"
+    [(ngModel)]="employee.firstName"
+    #firstName="ngModel"
+    required
+  />
+  <small class="error" *ngIf="firstName.invalid && firstName.touched">
+    First name is required
+  </small>
 
+  <!-- Last Name -->
   <label>Last Name</label>
-  <input type="text"
-         name="lastName"
-         [(ngModel)]="employee.lastName"
-         required />
+  <input
+    type="text"
+    name="lastName"
+    [(ngModel)]="employee.lastName"
+    #lastName="ngModel"
+    required
+  />
+  <small class="error" *ngIf="lastName.invalid && lastName.touched">
+    Last name is required
+  </small>
 
+  <!-- Email -->
   <label>Email</label>
-  <input type="email"
-         name="email"
-         [(ngModel)]="employee.email"
-         required />
+  <input
+    type="email"
+    name="email"
+    [(ngModel)]="employee.email"
+    #email="ngModel"
+    required
+    email
+  />
+  <small class="error" *ngIf="email.invalid && email.touched">
+    Enter a valid email address
+  </small>
 
+  <!-- Phone -->
   <label>Phone Number</label>
-  <input type="text"
-         name="phoneNumber"
-         [(ngModel)]="employee.phoneNumber"
-         pattern="^\d{10}$"
-         required />
+  <input
+    type="text"
+    name="phoneNumber"
+    [(ngModel)]="employee.phoneNumber"
+    #phone="ngModel"
+    pattern="^\d{10}$"
+    required
+  />
+  <small class="error" *ngIf="phone.invalid && phone.touched">
+    Phone number must be 10 digits
+  </small>
 
+  <!-- Department ID -->
   <label>Department ID</label>
-  <input type="number"
-       name="departmentID"
-       [(ngModel)]="employee.departmentId"
-       (ngModelChange)="employee.departmentId = +$event"
-       required />
+  <input
+    type="number"
+    name="departmentID"
+    [(ngModel)]="employee.departmentId"
+    #department="ngModel"
+    required
+    min="1"
+  />
+  <small class="error" *ngIf="department.invalid && department.touched">
+    Department ID is required
+  </small>
 
+  <!-- Salary -->
   <label>Salary</label>
-  <input type="number"
-         name="salary"
-         [(ngModel)]="employee.salary"
-         required />
+  <input
+    type="number"
+    name="salary"
+    [(ngModel)]="employee.salary"
+    #salary="ngModel"
+    required
+    min="1"
+  />
+  <small class="error" *ngIf="salary.invalid && salary.touched">
+    Salary must be greater than 0
+  </small>
 
+  <!-- Status -->
   <label>Status</label>
-  <select name="status"
-          [(ngModel)]="employee.status"
-          required>
+  <select
+    name="status"
+    [(ngModel)]="employee.status"
+    #status="ngModel"
+    required
+  >
     <option value="">Select</option>
     <option value="ACTIVE">ACTIVE</option>
     <option value="INACTIVE">INACTIVE</option>
   </select>
+  <small class="error" *ngIf="status.invalid && status.touched">
+    Status is required
+  </small>
 
+  <!-- Hire Date -->
   <label>Hire Date</label>
-  <input type="date"
-         name="hireDate"
-         [(ngModel)]="employee.hireDate"
-         required />
+  <input
+    type="date"
+    name="hireDate"
+    [(ngModel)]="employee.hireDate"
+    #hireDate="ngModel"
+    required
+  />
+  <small class="error" *ngIf="hireDate.invalid && hireDate.touched">
+    Hire date is required
+  </small>
 
+  <!-- Submit -->
   <button type="submit" [disabled]="employeeForm.invalid">
     Save Employee
   </button>
 
 </form>
+
+<app-footer></app-footer>

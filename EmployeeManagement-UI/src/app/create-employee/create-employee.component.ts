@@ -28,7 +28,7 @@ export class CreateEmployeeComponent {
 
   onSubmit(): void {
 
-    console.log(this.employee);
+    
 
     this.employeeService.createEmployee(this.employee)
       .subscribe({

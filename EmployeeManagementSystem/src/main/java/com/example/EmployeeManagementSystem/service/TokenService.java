@@ -56,4 +56,29 @@ public class TokenService {
 
         return response.getBody();
     }
+
+    public TokenResponseDTO refreshToken(String refreshToken) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "refresh_token");
+        body.add("client_id", clientId);
+        body.add("client_secret", clientSecret);
+        body.add("refresh_token", refreshToken);
+
+        HttpEntity<MultiValueMap<String, String>> request =
+                new HttpEntity<>(body, headers);
+
+        ResponseEntity<TokenResponseDTO> response =
+                restTemplate.postForEntity(
+                        TOKEN_URL,
+                        request,
+                        TokenResponseDTO.class
+                );
+
+        return response.getBody();
+    }
+
 }

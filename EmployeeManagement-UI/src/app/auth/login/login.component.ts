@@ -27,9 +27,8 @@ export class LoginComponent {
 
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
-        
-        // Keycloak returns access_token
-        this.authService.storeToken(response.access_token);
+        this.authService.storeToken(response);
+        this.loading = false;             
         this.router.navigate(['/dashboard']);
       },
       error: () => {
