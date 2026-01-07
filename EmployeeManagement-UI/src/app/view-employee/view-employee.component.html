@@ -1,0 +1,49 @@
+<app-navbar></app-navbar>
+
+<div class="view-container" *ngIf="!loading && employee">
+  <h2>🏴‍☠️ Employee Details</h2>
+
+  <div class="detail">
+    <span>First Name:</span>
+    <p>{{ employee.firstName }}</p>
+  </div>
+
+  <div class="detail">
+    <span>Last Name:</span>
+    <p>{{ employee.lastName }}</p>
+  </div>
+
+  <div class="detail">
+    <span>Email:</span>
+    <p>{{ employee.email }}</p>
+  </div>
+
+  <div class="detail">
+    <span>Phone:</span>
+    <p>{{ employee.phoneNumber }}</p>
+  </div>
+
+  <div class="detail">
+    <span>Status:</span>
+    <p>{{ employee.status }}</p>
+  </div>
+
+  <div class="detail">
+    <span>Department:</span>
+    <p>{{ employee.departmentName }}</p>
+  </div>
+
+  <div class="detail">
+    <span>Salary:</span>
+    <p>{{ employee.salary }}</p>
+  </div>
+
+  <div class="detail">
+    <span>Hire Date:</span>
+    <p>{{ employee.hireDate | date }}</p>
+  </div>
+
+  <button routerLink="/dashboard">⬅ Back to Dashboard</button>
+</div>
+
+<app-footer></app-footer>

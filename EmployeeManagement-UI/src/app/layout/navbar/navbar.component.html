@@ -1,0 +1,32 @@
+<nav class="navbar">
+  <!-- LEFT: LOGO -->
+  <div class="logo">
+    ☠ Straw Hat Admin ☠
+  </div>
+
+  <!-- CENTER: ACTION BUTTONS -->
+  <div class="nav-buttons">
+    <button routerLink="/employee/create">
+      Create
+    </button>
+
+    <button (click)="update()" [disabled]="!selectedEmployee">
+      Update
+    </button>
+
+    <button (click)="delete()" [disabled]="!selectedEmployee">
+      Delete
+    </button>
+
+    <button (click)="view()" [disabled]="!selectedEmployee">
+      View
+    </button>
+  </div>
+
+  <!-- RIGHT: LOGOUT -->
+  <div class="nav-right">
+    <button class="logout-btn" (click)="logout()">
+      Logout
+    </button>
+  </div>
+</nav>

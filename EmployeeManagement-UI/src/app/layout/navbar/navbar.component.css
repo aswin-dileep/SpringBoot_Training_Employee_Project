@@ -1,0 +1,71 @@
+/* NAVBAR CONTAINER */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  background: linear-gradient(90deg, #3b1f0f, #5a2d14);
+  border-bottom: 3px solid #facc15;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+/* LOGO */
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #facc15;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* BUTTON GROUP */
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* COMMON BUTTON STYLE */
+.nav-buttons button,
+.nav-right button {
+  padding: 8px 16px;
+  background-color: #b91c1c;
+  color: #fff;
+  border: 2px solid #facc15;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* HOVER */
+.nav-buttons button:hover:not(:disabled),
+.nav-right button:hover:not(:disabled) {
+  background-color: #7f1d1d;
+  color: #facc15;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(250, 204, 21, 0.5);
+}
+
+/* DISABLED STATE */
+button:disabled {
+  background-color: #374151;
+  border-color: #6b7280;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  background-color: #111827;
+  border: 2px solid #ef4444;
+  color: #ef4444;
+}
+
+.logout-btn:hover:not(:disabled) {
+  background-color: #450a0a;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.6);
+}

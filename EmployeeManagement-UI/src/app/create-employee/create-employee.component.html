@@ -1,0 +1,62 @@
+<h2>Add Employee</h2>
+
+<form #employeeForm="ngForm" (ngSubmit)="onSubmit()">
+
+  <label>First Name</label>
+  <input type="text"
+         name="firstName"
+         [(ngModel)]="employee.firstName"
+         required />
+
+  <label>Last Name</label>
+  <input type="text"
+         name="lastName"
+         [(ngModel)]="employee.lastName"
+         required />
+
+  <label>Email</label>
+  <input type="email"
+         name="email"
+         [(ngModel)]="employee.email"
+         required />
+
+  <label>Phone Number</label>
+  <input type="text"
+         name="phoneNumber"
+         [(ngModel)]="employee.phoneNumber"
+         pattern="^\d{10}$"
+         required />
+
+  <label>Department ID</label>
+  <input type="number"
+       name="departmentID"
+       [(ngModel)]="employee.departmentId"
+       (ngModelChange)="employee.departmentId = +$event"
+       required />
+
+  <label>Salary</label>
+  <input type="number"
+         name="salary"
+         [(ngModel)]="employee.salary"
+         required />
+
+  <label>Status</label>
+  <select name="status"
+          [(ngModel)]="employee.status"
+          required>
+    <option value="">Select</option>
+    <option value="ACTIVE">ACTIVE</option>
+    <option value="INACTIVE">INACTIVE</option>
+  </select>
+
+  <label>Hire Date</label>
+  <input type="date"
+         name="hireDate"
+         [(ngModel)]="employee.hireDate"
+         required />
+
+  <button type="submit" [disabled]="employeeForm.invalid">
+    Save Employee
+  </button>
+
+</form>

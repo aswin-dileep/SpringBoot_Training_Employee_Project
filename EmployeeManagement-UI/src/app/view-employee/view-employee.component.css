@@ -1,0 +1,50 @@
+.view-container {
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 30px;
+  background: linear-gradient(180deg, #3b1f0f, #2a160b);
+  border: 2px solid #facc15;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  color: #f9fafb;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+.view-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #facc15;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(250, 204, 21, 0.3);
+}
+
+.detail span {
+  font-weight: bold;
+  color: #facc15;
+}
+
+.detail p {
+  margin: 0;
+}
+
+button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 12px;
+  background-color: #b91c1c;
+  border: 2px solid #facc15;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #7f1d1d;
+  color: #facc15;
+}

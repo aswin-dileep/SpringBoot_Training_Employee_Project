@@ -1,0 +1,105 @@
+<app-navbar [selectedEmployee]="selectedEmployee"></app-navbar>
+<div class="container">
+
+  <h2>Employee Dashboard</h2>
+
+  <!-- Filters -->
+  <div class="filters">
+    <input
+  type="text"
+  placeholder="Search Name"
+  [(ngModel)]="filters.name"
+  (keyup)="applyFilters()"
+/>
+
+<select [(ngModel)]="filters.status" (change)="applyFilters()">
+  <option value="">All Status</option>
+  <option value="ACTIVE">Active</option>
+  <option value="INACTIVE">Inactive</option>
+</select>
+
+<input
+  type="number"
+  placeholder="Department ID"
+  [(ngModel)]="filters.departmentId"
+  (keyup)="applyFilters()"
+/>
+
+<input
+  type="number"
+  placeholder="Min Salary"
+  [(ngModel)]="filters.minSalary"
+  (change)="applyFilters()"
+/>
+
+<input
+  type="number"
+  placeholder="Max Salary"
+  [(ngModel)]="filters.maxSalary"
+  (change)="applyFilters()"
+/>
+
+
+  </div>
+
+  <!-- Table -->
+  <table class="employee-table">
+  <thead>
+    <tr>
+      
+      <th>Select</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th>Department</th>
+      <th>Salary</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    
+    <tr *ngFor="let emp of employees"
+        [class.selected]="selectedEmployee?.id === emp.id"
+        (click)="selectEmployee(emp)">
+
+      <td>
+        <input
+          type="radio"
+          name="selectedEmployee"
+          [checked]="selectedEmployee?.id === emp.id"
+        />
+      </td>
+
+      <td>{{ emp.firstName }} {{ emp.lastName }}</td>
+      <td>{{ emp.email }}</td>
+      <td>{{ emp.status }}</td>
+      <td>{{ emp.departmentName }}</td>
+      <td>{{ emp.salary }}</td>
+
+    </tr> 
+  </tbody>
+</table>
+
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button
+      (click)="prevPage()"
+      [disabled]="pageIndex === 0">
+      Previous
+    </button>
+
+    <span>
+      Page {{ pageIndex + 1 }} of {{ totalPages }}
+    </span>
+
+    <button
+      (click)="nextPage()"
+      [disabled]="pageIndex + 1 >= totalPages">
+      Next
+    </button>
+  </div>
+
+</div>
+<app-footer></app-footer>

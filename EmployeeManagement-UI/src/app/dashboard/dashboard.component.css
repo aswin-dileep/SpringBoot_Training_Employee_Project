@@ -1,0 +1,135 @@
+/* Main container */
+.container {
+  padding: 25px;
+  background: linear-gradient(180deg, #2a160b, #1a0f07);
+  min-height: calc(100vh - 120px);
+  color: #f9fafb;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+/* Title */
+.container h2 {
+  color: #facc15; /* gold */
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filters input,
+.filters select {
+  padding: 8px 12px;
+  background-color: #111827;
+  color: #f9fafb;
+  border: 1.5px solid #6b7280;
+  border-radius: 5px;
+  min-width: 180px;
+}
+
+.filters input::placeholder {
+  color: #9ca3af;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: #facc15;
+  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.3);
+}
+
+/* Employee Table */
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #0f172a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Header */
+.employee-table th {
+  background-color: #3b1f0f;
+  color: #facc15;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #facc15;
+}
+
+/* Body cells */
+.employee-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #374151;
+  color: #e5e7eb;
+}
+
+/* Hover effect */
+.employee-table tbody tr:hover {
+  background-color: #1f2937;
+  cursor: pointer;
+}
+
+/* Selected row */
+.employee-table tr.selected {
+  background-color: rgba(250, 204, 21, 0.15);
+  border-left: 4px solid #facc15;
+}
+
+/* Radio button alignment */
+.employee-table input[type="radio"] {
+  accent-color: #facc15;
+  cursor: pointer;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Pagination buttons */
+.pagination button {
+  padding: 8px 14px;
+  background-color: #b91c1c; /* pirate red */
+  color: white;
+  border: 2px solid #facc15;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+.pagination button:hover:not(:disabled) {
+  background-color: #7f1d1d;
+  color: #facc15;
+  transform: translateY(-1px);
+}
+
+/* Disabled */
+.pagination button:disabled {
+  background-color: #374151;
+  border-color: #6b7280;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Page info */
+.pagination span {
+  color: #facc15;
+  font-weight: bold;
+}
+
+/* Space for footer */
+.dashboard-content {
+  padding: 20px;
+  margin-bottom: 70px;
+}
