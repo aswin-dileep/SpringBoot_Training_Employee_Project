@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 
 @Component({
@@ -10,13 +10,14 @@ export class DashboardComponent implements OnInit {
 
   employees: any[] = [];
   selectedEmployee: any = null;
+  dataTable: any;
 
   pageIndex = 0;
   pageSize = 5;
   totalElements = 0;
   totalPages = 0;
 
-  // ✅ SINGLE FILTER OBJECT
+
   filters = {
     name: '',
     status: '',
@@ -27,28 +28,105 @@ export class DashboardComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService) {}
 
+  
+
   ngOnInit(): void {
-    this.loadEmployees();
+    // this.loadEmployees();
+  }
+
+  ngAfterViewInit(): void {
+    this.initDataTable();
+  }
+
+  initDataTable(): void {
+    const self = this;
+
+      if (typeof ($) === 'undefined') {
+        console.error('jQuery not loaded!');
+        return;
+      }
+
+    this.dataTable = ($('#employeeTable') as any).DataTable({
+      processing: true,
+      serverSide: true,
+      searching: false,
+      pageLength: 5,
+
+      ajax: (params: any, callback: any) => {
+        const page = Math.floor(params.start / params.length);
+
+        const requestParams: any = {
+        page: page,
+        size: params.length,
+        search: this.filters.name || '',
+        status: this.filters.status || ''
+  };
+
+  if (this.filters.departmentId !== null) {
+      requestParams.departmentId = this.filters.departmentId;
+  }
+
+  if (this.filters.minSalary !== null) {
+    requestParams.minSalary = this.filters.minSalary;
+  }
+
+  if (this.filters.maxSalary !== null) {
+      requestParams.maxSalary = this.filters.maxSalary;
+  }
+
+        self.employeeService.getEmployees(requestParams)
+          .subscribe(resp => {
+            callback({
+              draw: params.draw,
+              recordsTotal: resp.totalElements,
+              recordsFiltered: resp.totalElements,
+              data: resp.content
+            });
+          });
+      },
+
+      columns: [
+        {
+          data: null,
+          render: () => `<input type="radio" name="selectedEmployee">`
+        },
+        {
+          data: null,
+          render: (d: any) => `${d.firstName} ${d.lastName}`
+        },
+        { data: 'email' },
+        { data: 'status' },
+        { data: 'departmentName' },
+        { data: 'salary' }
+      ]
+    });
+
+    $('#employeeTable tbody').on('click', 'tr', function () {
+      const rowData = self.dataTable.row(this).data();
+      self.selectedEmployee = rowData;
+
+      $('input[name="selectedEmployee"]').prop('checked', false);
+      $(this).find('input[name="selectedEmployee"]').prop('checked', true);
+    });
   }
 
   selectEmployee(emp: any) {
     this.selectedEmployee = emp;
   }
 
-  loadEmployees(): void {
-    this.employeeService
-      .getEmployees(this.pageIndex, this.pageSize, this.filters)
-      .subscribe(res => {
-        this.employees = res.content;
-        this.totalElements = res.totalElements;
-        this.totalPages = res.totalPages;
-      });
-  }
+  // loadEmployees(): void {
+  //   this.employeeService
+  //     .getEmployees(this.pageIndex, this.pageSize, this.filters)
+  //     .subscribe(res => {
+  //       this.employees = res.content;
+  //       this.totalElements = res.totalElements;
+  //       this.totalPages = res.totalPages;
+  //     });
+  // }
 
   applyFilters(): void {
-    this.pageIndex = 0;
     this.selectedEmployee = null;
-    this.loadEmployees();
+    this.dataTable.ajax.reload();
   }
 
   resetFilter(): void {
@@ -59,23 +137,27 @@ export class DashboardComponent implements OnInit {
       minSalary: null,
       maxSalary: null
     };
-
-    this.pageIndex = 0;
     this.selectedEmployee = null;
-    this.loadEmployees();
+    this.dataTable.ajax.reload();
   }
 
-  nextPage(): void {
-    if (this.pageIndex + 1 < this.totalPages) {
-      this.pageIndex++;
-      this.loadEmployees();
+  ngOnDestroy(): void {
+    if (this.dataTable) {
+      this.dataTable.destroy(true);
     }
   }
 
-  prevPage(): void {
-    if (this.pageIndex > 0) {
-      this.pageIndex--;
-      this.loadEmployees();
-    }
-  }
+  // nextPage(): void {
+  //   if (this.pageIndex + 1 < this.totalPages) {
+  //     this.pageIndex++;
+  //     this.loadEmployees();
+  //   }
+  // }
+
+  // prevPage(): void {
+  //   if (this.pageIndex > 0) {
+  //     this.pageIndex--;
+  //     this.loadEmployees();
+  //   }
+  // }
 }

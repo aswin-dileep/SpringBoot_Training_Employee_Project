@@ -31,7 +31,7 @@ public class EmployeeController {
     public Page<EmployeeResponseDTO> getEmployees(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String search,
             @RequestParam(required = false) String status,
             @RequestParam(required = false) Long departmentId,
             @RequestParam(required = false) Double minSalary,
@@ -40,13 +40,14 @@ public class EmployeeController {
         return employeeService.getEmployees(
                 page,
                 size,
-                name,
+                search,
                 status,
                 departmentId,
                 minSalary,
                 maxSalary
         );
     }
+
 
 
 

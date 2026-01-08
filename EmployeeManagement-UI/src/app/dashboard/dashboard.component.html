@@ -53,47 +53,23 @@
   </div>
 
   <!-- Table -->
-  <table class="employee-table">
+  <table id="employeeTable" class="display employee-table">
   <thead>
     <tr>
-      
       <th>Select</th>
       <th>Name</th>
       <th>Email</th>
       <th>Status</th>
       <th>Department</th>
       <th>Salary</th>
-
     </tr>
   </thead>
-
-  <tbody>
-    
-    <tr *ngFor="let emp of employees"
-        [class.selected]="selectedEmployee?.id === emp.id"
-        (click)="selectEmployee(emp)">
-
-      <td>
-        <input
-          type="radio"
-          name="selectedEmployee"
-          [checked]="selectedEmployee?.id === emp.id"
-        />
-      </td>
-
-      <td>{{ emp.firstName }} {{ emp.lastName }}</td>
-      <td>{{ emp.email }}</td>
-      <td>{{ emp.status }}</td>
-      <td>{{ emp.departmentName }}</td>
-      <td>{{ emp.salary }}</td>
-
-    </tr> 
-  </tbody>
 </table>
 
 
+
   <!-- Pagination -->
-  <div class="pagination">
+  <!-- <div class="pagination">
     <button
       (click)="prevPage()"
       [disabled]="pageIndex === 0">
@@ -109,7 +85,7 @@
       [disabled]="pageIndex + 1 >= totalPages">
       Next
     </button>
-  </div>
+  </div> -->
 
 </div>
 <app-footer></app-footer>

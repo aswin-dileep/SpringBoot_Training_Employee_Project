@@ -31,12 +31,15 @@ public class EmployeeSpecification {
     }
 
     public static Specification<Employee> hasName(String name) {
-        return (root, query, cb) ->
-                name == null ? null :
-                        cb.or(
-                                cb.like(cb.lower(root.get("firstName")), "%" + name.toLowerCase() + "%"),
-                                cb.like(cb.lower(root.get("lastName")), "%" + name.toLowerCase() + "%")
-                        );
+        return (root, query, cb) -> {
+            if (name == null || name.isBlank()) {
+                return null;
+            }
+            return cb.or(
+                    cb.like(cb.lower(root.get("firstName")), "%" + name.toLowerCase() + "%"),
+                    cb.like(cb.lower(root.get("lastName")), "%" + name.toLowerCase() + "%")
+            );
+        };
     }
 
     public static Specification<Employee> hasSalaryBetween(
