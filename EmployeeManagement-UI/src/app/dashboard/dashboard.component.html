@@ -6,11 +6,11 @@
   <!-- Filters -->
   <div class="filters">
     <input
-  type="text"
-  placeholder="Search Name"
-  [(ngModel)]="filters.name"
+    type="text"
+    placeholder="Search Name"
+    [(ngModel)]="filters.name"
   
-/>
+  />
 
 <select [(ngModel)]="filters.status" >
   <option value="">All Status</option>
@@ -37,6 +37,17 @@
   placeholder="Max Salary"
   [(ngModel)]="filters.maxSalary"
   
+/>
+
+<input
+  type="text"
+  class="form-control"
+  ngxDaterangepickerMd
+  [(ngModel)]="hireDateRange"
+  [locale]="{ format: 'YYYY-MM-DD' }"
+  [autoApply]="true"
+  [showDropdowns]="true"
+  placeholder="Select hire date range"
 />
 
 <div class="filter-actions">

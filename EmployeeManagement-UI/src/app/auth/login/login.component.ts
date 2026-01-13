@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,7 @@ export class LoginComponent {
   loading = false;
 
 
-  constructor(private router: Router,private authService:AuthService ) {}
+  constructor(private router: Router,private authService:AuthService,private toastr: ToastrService, ) {}
 
   login() {
     this.errorMessage = '';
@@ -29,10 +29,11 @@ export class LoginComponent {
       next: (response) => {
         this.authService.storeToken(response);
         this.loading = false;             
+        this.toastr.success('Login successful', 'Success');
         this.router.navigate(['/dashboard']);
       },
       error: () => {
-        this.errorMessage = 'Invalid username or password';
+        this.toastr.error('Invalid username or password', 'Error');
         this.loading = false;
       }
     });

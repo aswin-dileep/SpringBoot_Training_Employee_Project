@@ -4,6 +4,8 @@ import com.example.EmployeeManagementSystem.entity.Employee;
 import com.example.EmployeeManagementSystem.entity.EmployeeStatus;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
+
 public class EmployeeSpecification {
 
     public static Specification<Employee> hasStatus(String status) {
@@ -63,6 +65,39 @@ public class EmployeeSpecification {
             return cb.lessThanOrEqualTo(root.get("salary"), maxSalary);
         };
     }
+
+    public static Specification<Employee> hasHireDateBetween(
+            LocalDate startDate,
+            LocalDate endDate
+    ) {
+        return (root, query, cb) -> {
+
+            if (startDate == null && endDate == null) {
+                return null; // ✅ no date filter
+            }
+
+            if (startDate != null && endDate != null) {
+                return cb.between(
+                        root.get("hireDate"),
+                        startDate,
+                        endDate
+                );
+            }
+
+            if (startDate != null) {
+                return cb.greaterThanOrEqualTo(
+                        root.get("hireDate"),
+                        startDate
+                );
+            }
+
+            return cb.lessThanOrEqualTo(
+                    root.get("hireDate"),
+                    endDate
+            );
+        };
+    }
+
 
 
 

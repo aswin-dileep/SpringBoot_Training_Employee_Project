@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { EmployeeService } from '../employee.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +18,10 @@ export class DashboardComponent implements OnInit {
   totalElements = 0;
   totalPages = 0;
 
-
+hireDateRange = {
+  startDate: null,
+  endDate: null
+};
   filters = {
     name: '',
     status: '',
@@ -25,6 +29,7 @@ export class DashboardComponent implements OnInit {
     minSalary: null,
     maxSalary: null
   };
+  
 
   constructor(private employeeService: EmployeeService) {}
 
@@ -53,14 +58,22 @@ export class DashboardComponent implements OnInit {
       pageLength: 5,
 
       ajax: (params: any, callback: any) => {
-        const page = Math.floor(params.start / params.length);
+        // const page = Math.floor(params.start / params.length);
 
         const requestParams: any = {
-        page: page,
+        page: Math.floor(params.start / params.length),
         size: params.length,
         search: this.filters.name || '',
-        status: this.filters.status || ''
+        status: this.filters.status || '',
+        departmentId: this.filters.departmentId,
+        minSalary: this.filters.minSalary,
+        maxSalary: this.filters.maxSalary
   };
+
+  if (this.hireDateRange?.startDate && this.hireDateRange?.endDate) {
+    requestParams.startDate = moment(this.hireDateRange.startDate).format('YYYY-MM-DD');
+    requestParams.endDate = moment(this.hireDateRange.endDate).format('YYYY-MM-DD');
+  }
 
   if (this.filters.departmentId !== null) {
       requestParams.departmentId = this.filters.departmentId;
@@ -137,6 +150,11 @@ export class DashboardComponent implements OnInit {
       minSalary: null,
       maxSalary: null
     };
+    this.hireDateRange = {
+    startDate: null,
+    endDate: null
+    };
+
     this.selectedEmployee = null;
     this.dataTable.ajax.reload();
   }

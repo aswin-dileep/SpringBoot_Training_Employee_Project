@@ -93,7 +93,9 @@ public class EmployeeService {
             String status,
             Long departmentId,
             Double minSalary,
-            Double maxSalary
+            Double maxSalary,
+            LocalDate startDate,
+            LocalDate endDate
     ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
 
@@ -101,7 +103,8 @@ public class EmployeeService {
                 .where(EmployeeSpecification.hasName(name))
                 .and(EmployeeSpecification.hasStatus(status))
                 .and(EmployeeSpecification.hasDepartment(departmentId))
-                .and(EmployeeSpecification.hasSalaryBetween(minSalary, maxSalary));
+                .and(EmployeeSpecification.hasSalaryBetween(minSalary, maxSalary))
+                .and(EmployeeSpecification.hasHireDateBetween(startDate, endDate));;
 
         Page<EmployeeResponseDTO> pageResult =
                 employeeRepository.findAll(spec, pageable)

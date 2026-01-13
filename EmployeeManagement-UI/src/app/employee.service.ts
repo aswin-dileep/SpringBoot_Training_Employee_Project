@@ -10,41 +10,25 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) {}
 
-  getEmployees(params: any) {
-  return this.http.get<any>('http://localhost:8282/employee', {
-    params
-  });
-}
-
-
-//   getEmployees(page: number, size: number, filters: any) {
-
-//   let params = new HttpParams()
-//     .set('page', page.toString())
-//     .set('size', size.toString());
-
-//   if (filters.name && filters.name.trim() !== '') {
-//     params = params.set('name', filters.name);
-//   }
-
-//   if (filters.status) {
-//     params = params.set('status', filters.status);
-//   }
-
-//   if (filters.departmentId !== null && filters.departmentId !== undefined) {
-//     params = params.set('departmentId', filters.departmentId.toString());
-//   }
-
-//   if (filters.minSalary !== null && filters.minSalary !== undefined) {
-//     params = params.set('minSalary', filters.minSalary.toString());
-//   }
-
-//   if (filters.maxSalary !== null && filters.maxSalary !== undefined) {
-//     params = params.set('maxSalary', filters.maxSalary.toString());
-//   }
-
-//   return this.http.get<any>(this.baseUrl, { params });
+//   getEmployees(params: any) {
+//   return this.http.get<any>('http://localhost:8282/employee', {
+//     params
+//   });
 // }
+
+
+  getEmployees(filters: any) {
+  let params = new HttpParams();
+
+  // Loop through the object keys to set params dynamically
+  Object.keys(filters).forEach(key => {
+    if (filters[key] !== null && filters[key] !== undefined && filters[key] !== '') {
+      params = params.set(key, filters[key].toString());
+    }
+  });
+
+  return this.http.get<any>(this.baseUrl, { params });
+}
 
 
   createEmployee(employee: any) {

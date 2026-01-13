@@ -7,10 +7,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -35,7 +37,15 @@ public class EmployeeController {
             @RequestParam(required = false) String status,
             @RequestParam(required = false) Long departmentId,
             @RequestParam(required = false) Double minSalary,
-            @RequestParam(required = false) Double maxSalary
+            @RequestParam(required = false) Double maxSalary,
+
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate startDate,
+
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate endDate
     ) {
         return employeeService.getEmployees(
                 page,
@@ -44,7 +54,9 @@ public class EmployeeController {
                 status,
                 departmentId,
                 minSalary,
-                maxSalary
+                maxSalary,
+                startDate,
+                endDate
         );
     }
 
