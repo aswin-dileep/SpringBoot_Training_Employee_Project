@@ -28,10 +28,8 @@ public class Employee {
 
     @Column(name = "department_id", nullable = false)
     private Long departmentId;
-    private double salary;
-
+    private Double salary;
     private EmployeeStatus status;
-
     private LocalDate hireDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

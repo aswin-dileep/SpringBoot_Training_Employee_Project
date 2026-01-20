@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class EmployeeRequestDTO {
 
-    @NotBlank(message="${employee.firstname.requered}" )
+    @NotBlank(message="{employee.firstname.required}" )
     private String firstName;
 
     @NotBlank(message = "Last Name must not be blank" )
@@ -38,7 +38,7 @@ public class EmployeeRequestDTO {
     private Long departmentId;
 
     @NotNull(message = "Salary must not be blank" )
-    private double salary;
+    private Double salary;
 
     @NotNull(message = "Status must not be blank" )
     @Enumerated(EnumType.STRING)

@@ -32,8 +32,9 @@ export class LoginComponent {
         this.toastr.success('Login successful', 'Success');
         this.router.navigate(['/dashboard']);
       },
-      error: () => {
+      error: (err) => {
         this.toastr.error('Invalid username or password', 'Error');
+        
         this.loading = false;
       }
     });

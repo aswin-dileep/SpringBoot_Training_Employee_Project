@@ -9,7 +9,9 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @ControllerAdvice
@@ -30,6 +32,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+
+
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAll(
             Exception e,
@@ -46,12 +51,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidation(
+    public ResponseEntity<Map<String, List<String>>> handleValidation(
             MethodArgumentNotValidException ex) {
 
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors()
-                .forEach(err -> errors.put(err.getField(), err.getDefaultMessage()));
+        Map<String, List<String>> errors = new HashMap<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(err ->
+                errors.computeIfAbsent(err.getField(), k -> new ArrayList<>())
+                        .add(err.getDefaultMessage())
+        );
 
         return ResponseEntity.badRequest().body(errors);
     }

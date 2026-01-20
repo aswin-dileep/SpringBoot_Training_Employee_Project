@@ -13,15 +13,16 @@ export class DashboardComponent implements OnInit {
   selectedEmployee: any = null;
   dataTable: any;
 
-  pageIndex = 0;
-  pageSize = 5;
-  totalElements = 0;
-  totalPages = 0;
+  // pageIndex = 0;
+  // pageSize = 5;
+  // totalElements = 0;
+  // totalPages = 0;
 
-hireDateRange = {
-  startDate: null,
-  endDate: null
-};
+  hireDateRange = {
+    startDate: null,
+    endDate: null
+  };
+
   filters = {
     name: '',
     status: '',
@@ -29,11 +30,11 @@ hireDateRange = {
     minSalary: null,
     maxSalary: null
   };
-  
 
-  constructor(private employeeService: EmployeeService) {}
 
-  
+  constructor(private employeeService: EmployeeService) { }
+
+
 
   ngOnInit(): void {
     // this.loadEmployees();
@@ -46,10 +47,10 @@ hireDateRange = {
   initDataTable(): void {
     const self = this;
 
-      if (typeof ($) === 'undefined') {
-        console.error('jQuery not loaded!');
-        return;
-      }
+    if (typeof ($) === 'undefined') {
+      console.error('jQuery not loaded!');
+      return;
+    }
 
     this.dataTable = ($('#employeeTable') as any).DataTable({
       processing: true,
@@ -59,33 +60,33 @@ hireDateRange = {
 
       ajax: (params: any, callback: any) => {
         // const page = Math.floor(params.start / params.length);
-
+        console.log(params);
         const requestParams: any = {
-        page: Math.floor(params.start / params.length),
-        size: params.length,
-        search: this.filters.name || '',
-        status: this.filters.status || '',
-        departmentId: this.filters.departmentId,
-        minSalary: this.filters.minSalary,
-        maxSalary: this.filters.maxSalary
-  };
+          page: Math.floor(params.start / params.length),
+          size: params.length,
+          search: this.filters.name || '',
+          status: this.filters.status || '',
+          departmentId: this.filters.departmentId,
+          minSalary: this.filters.minSalary,
+          maxSalary: this.filters.maxSalary
+        };
 
-  if (this.hireDateRange?.startDate && this.hireDateRange?.endDate) {
-    requestParams.startDate = moment(this.hireDateRange.startDate).format('YYYY-MM-DD');
-    requestParams.endDate = moment(this.hireDateRange.endDate).format('YYYY-MM-DD');
-  }
+        if (this.hireDateRange?.startDate && this.hireDateRange?.endDate) {
+          requestParams.startDate = moment(this.hireDateRange.startDate).format('YYYY-MM-DD');
+          requestParams.endDate = moment(this.hireDateRange.endDate).format('YYYY-MM-DD');
+        }
 
-  if (this.filters.departmentId !== null) {
-      requestParams.departmentId = this.filters.departmentId;
-  }
+        if (this.filters.departmentId !== null) {
+          requestParams.departmentId = this.filters.departmentId;
+        }
 
-  if (this.filters.minSalary !== null) {
-    requestParams.minSalary = this.filters.minSalary;
-  }
+        if (this.filters.minSalary !== null) {
+          requestParams.minSalary = this.filters.minSalary;
+        }
 
-  if (this.filters.maxSalary !== null) {
-      requestParams.maxSalary = this.filters.maxSalary;
-  }
+        if (this.filters.maxSalary !== null) {
+          requestParams.maxSalary = this.filters.maxSalary;
+        }
 
         self.employeeService.getEmployees(requestParams)
           .subscribe(resp => {
@@ -151,8 +152,8 @@ hireDateRange = {
       maxSalary: null
     };
     this.hireDateRange = {
-    startDate: null,
-    endDate: null
+      startDate: null,
+      endDate: null
     };
 
     this.selectedEmployee = null;

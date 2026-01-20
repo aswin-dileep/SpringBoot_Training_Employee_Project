@@ -19,7 +19,7 @@ public class EmployeeMapper {
                 .lastName(employee.getLastName())
                 .email(employee.getEmail())
                 .phoneNumber(employee.getPhoneNumber())
-                .departmentID(employee.getDepartmentId())
+                .departmentId(employee.getDepartmentId())
                 .salary(employee.getSalary())
                 .status(employee.getStatus())
                 .hireDate(employee.getHireDate())

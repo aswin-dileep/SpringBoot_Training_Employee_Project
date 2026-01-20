@@ -1,5 +1,6 @@
 import { Component,Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/auth.service';
 import { EmployeeService } from 'src/app/employee.service';
 @Component({
@@ -9,7 +10,10 @@ import { EmployeeService } from 'src/app/employee.service';
 })
 export class NavbarComponent {
 
-  constructor(private router: Router,private authService:AuthService,private employeeService: EmployeeService) {}
+  constructor(private router: Router,
+    private authService:AuthService,
+    private employeeService: EmployeeService,
+    private toastr:ToastrService) {}
 
 
   @Input() selectedEmployee: any;
@@ -38,9 +42,9 @@ export class NavbarComponent {
  delete() {
   if (confirm('Are you sure you want to delete this employee?')) {
     this.employeeService
-      .deleteEmployee(this.selectedEmployee.id)
+      .softDeleteEmployee(this.selectedEmployee.id)
       .subscribe(() => {
-        alert('Employee deleted');
+        this.toastr.success('Employee deleted');
         window.location.reload();
       });
   }

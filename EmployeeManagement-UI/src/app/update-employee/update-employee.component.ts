@@ -3,6 +3,7 @@ import { EmployeeService } from '../employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-update-employee',
   templateUrl: './update-employee.component.html',
@@ -22,17 +23,18 @@ export class UpdateEmployeeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.employeeId = Number(this.route.snapshot.paramMap.get('id'));
 
     this.employeeForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      departmentID: ['', Validators.required],
-      salary: ['', Validators.required],
-      status: ['', Validators.required],
-      hireDate: ['', Validators.required]
+      firstName: '',
+      lastName:'',
+      email: '',
+      phoneNumber: '',
+     departmentId: ['', Validators.required], 
+      salary: '',
+      status: '',     
+      hireDate: ''
     });
 
     this.employeeService.getEmployeeById(this.employeeId).subscribe(res => {
@@ -40,8 +42,11 @@ export class UpdateEmployeeComponent implements OnInit {
     });
   }
 
-  updateEmployee() {
-    if (this.employeeForm.invalid) return;
+  updateEmployee(): void {
+    if (this.employeeForm.invalid) {
+      this.employeeForm.markAllAsTouched();
+      return;
+    }
 
     this.employeeService
       .updateEmployee(this.employeeId, this.employeeForm.value)
@@ -50,7 +55,22 @@ export class UpdateEmployeeComponent implements OnInit {
           this.toastr.success('Employee updated successfully');
           this.router.navigate(['/dashboard']);
         },
-        error: () => this.toastr.error('Update failed')
+        error: err => {
+          if (err.status === 400 && typeof err.error === 'object') {
+            this.applyBackendErrors(err.error);
+          } else {
+            this.toastr.error(err.error?.message || 'Update failed');
+          }
+        }
       });
+  }
+
+  private applyBackendErrors(errors: { [key: string]: string[] }) {
+    Object.keys(errors).forEach(field => {
+      const control = this.employeeForm.get(field);
+      if (control) {
+        control.setErrors({ backend: errors[field][0] });
+      }
+    });
   }
 }

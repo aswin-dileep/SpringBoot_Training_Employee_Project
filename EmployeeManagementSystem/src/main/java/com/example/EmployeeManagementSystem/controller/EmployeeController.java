@@ -77,7 +77,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeResponseDTO> updateEmployee(@PathVariable Long id,@RequestBody EmployeeRequestDTO dto){
+    public ResponseEntity<EmployeeResponseDTO> updateEmployee(@PathVariable Long id,@Valid @RequestBody EmployeeRequestDTO dto){
         EmployeeResponseDTO updatedEmployee = employeeService.updateEmployeeById(id,dto);
 
         return ResponseEntity.ok(updatedEmployee);
@@ -86,6 +86,16 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
         String response = employeeService.deleteEmployeeById(id);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/soft/{id}")
+    public ResponseEntity<String>  softDelete(@PathVariable Long id){
+
+        String response = employeeService.softDelete(id);
+
+
 
         return ResponseEntity.ok(response);
     }

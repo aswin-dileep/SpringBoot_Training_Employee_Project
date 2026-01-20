@@ -5,7 +5,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
 import { UpdateEmployeeComponent } from './update-employee/update-employee.component';
-import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
 import { ViewEmployeeComponent } from './view-employee/view-employee.component';
 
 const routes: Routes = [

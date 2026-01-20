@@ -20,13 +20,13 @@ public class EmployeeResponseDTO {
     private String lastName;
     private String email;
     private String phoneNumber;
-    private double salary;
+    private Double salary;
     private EmployeeStatus status;
     private LocalDate hireDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private DepartmentResponseDTO department;
-    private Long departmentID;
+    private Long departmentId;
     private String departmentName;
     private String departmentLocation;
 

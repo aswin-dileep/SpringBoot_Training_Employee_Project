@@ -13,8 +13,8 @@
     #firstName="ngModel"
     required
   />
-  <small class="error" *ngIf="firstName.invalid && firstName.touched">
-    First name is required
+  <small class="error" *ngIf="backendErrors?.firstName" class="text-danger">
+   {{backendErrors.firstName[0]}}
   </small>
 
   <!-- Last Name -->
@@ -26,9 +26,9 @@
     #lastName="ngModel"
     required
   />
-  <small class="error" *ngIf="lastName.invalid && lastName.touched">
-    Last name is required
-  </small>
+  <small class="error" *ngIf="backendErrors?.lastName">
+  {{ backendErrors.lastName[0] }}
+</small>
 
   <!-- Email -->
   <label>Email</label>
@@ -40,9 +40,9 @@
     required
     email
   />
-  <small class="error" *ngIf="email.invalid && email.touched">
-    Enter a valid email address
-  </small>
+  <small class="error" *ngIf="backendErrors?.email">
+  {{ backendErrors.email[0] }}
+</small>
 
   <!-- Phone -->
   <label>Phone Number</label>
@@ -54,9 +54,9 @@
     pattern="^\d{10}$"
     required
   />
-  <small class="error" *ngIf="phone.invalid && phone.touched">
-    Phone number must be 10 digits
-  </small>
+  <small class="error" *ngIf="backendErrors?.phoneNumber">
+  {{ backendErrors.phoneNumber[0] }}
+</small>
 
   <!-- Department ID -->
   <label>Department ID</label>
@@ -68,9 +68,9 @@
     required
     min="1"
   />
-  <small class="error" *ngIf="department.invalid && department.touched">
-    Department ID is required
-  </small>
+  <small class="error" *ngIf="backendErrors?.departmentId">
+  {{ backendErrors.departmentId[0] }}
+</small>
 
   <!-- Salary -->
   <label>Salary</label>
@@ -82,9 +82,9 @@
     required
     min="1"
   />
-  <small class="error" *ngIf="salary.invalid && salary.touched">
-    Salary must be greater than 0
-  </small>
+  <small class="error" *ngIf="backendErrors?.salary">
+  {{ backendErrors.salary[0] }}
+</small>
 
   <!-- Status -->
   <label>Status</label>
@@ -94,13 +94,13 @@
     #status="ngModel"
     required
   >
-    <option value="">Select</option>
+    <option [ngValue]="null">Select</option>
     <option value="ACTIVE">ACTIVE</option>
     <option value="INACTIVE">INACTIVE</option>
   </select>
-  <small class="error" *ngIf="status.invalid && status.touched">
-    Status is required
-  </small>
+<small class="error" *ngIf="backendErrors?.status">
+  {{ backendErrors.status[0] }}
+</small>
 
   <!-- Hire Date -->
   <label>Hire Date</label>
@@ -111,12 +111,12 @@
     #hireDate="ngModel"
     required
   />
-  <small class="error" *ngIf="hireDate.invalid && hireDate.touched">
-    Hire date is required
-  </small>
+  <small class="error" *ngIf="backendErrors?.hireDate">
+  {{ backendErrors.hireDate[0] }}
+</small>
 
   <!-- Submit -->
-  <button type="submit" [disabled]="employeeForm.invalid">
+  <button type="submit" >
     Save Employee
   </button>
 

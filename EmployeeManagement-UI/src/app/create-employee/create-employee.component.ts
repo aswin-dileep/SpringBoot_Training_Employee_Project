@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-employee',
@@ -13,7 +14,7 @@ export class CreateEmployeeComponent {
     firstName: '',
     lastName:'',
     email: '',
-    status: '',
+    status: null,
     departmentId: null,
     phoneNumber: '',
     salary: null,
@@ -21,24 +22,31 @@ export class CreateEmployeeComponent {
    
   };
 
+  backendErrors: { [key: string]: string[] } = {};
+
   constructor(
     private employeeService: EmployeeService,
-    private router: Router
+    private router: Router,
+    private toastr:ToastrService
   ) {}
 
   onSubmit(): void {
-
-    
-
+    this.backendErrors = {};
     this.employeeService.createEmployee(this.employee)
       .subscribe({
         next: () => {
-          alert('Employee created successfully');
+          this.toastr.success('Employee created successfully');
           this.router.navigate(['/dashboard']);
         },
         error: err => {
-          console.error(err);
-          alert('Failed to create employee');
+          
+          if (err.status === 400) {
+            console.log(err.error);
+            this.backendErrors = err.error; 
+          } else {
+            console.log('hey');
+            this.toastr.error(err.error?.message || 'Failed to create employee');
+          }
         }
       });
   }

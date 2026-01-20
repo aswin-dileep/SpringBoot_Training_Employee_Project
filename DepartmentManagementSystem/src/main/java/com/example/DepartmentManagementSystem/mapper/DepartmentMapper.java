@@ -35,5 +35,4 @@ public class DepartmentMapper {
         department.setUpdatedAt(LocalDateTime.now());
     }
 
-
 }

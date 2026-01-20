@@ -18,17 +18,17 @@ export class EmployeeService {
 
 
   getEmployees(filters: any) {
-  let params = new HttpParams();
+    let params = new HttpParams();
 
-  // Loop through the object keys to set params dynamically
-  Object.keys(filters).forEach(key => {
-    if (filters[key] !== null && filters[key] !== undefined && filters[key] !== '') {
-      params = params.set(key, filters[key].toString());
-    }
-  });
+    // Loop through the object keys to set params dynamically
+    Object.keys(filters).forEach(key => {
+      if (filters[key] !== null && filters[key] !== undefined && filters[key] !== '') {
+        params = params.set(key, filters[key].toString());
+     }
+    });
 
   return this.http.get<any>(this.baseUrl, { params });
-}
+ }
 
 
   createEmployee(employee: any) {
@@ -45,5 +45,9 @@ export class EmployeeService {
 
   deleteEmployee(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+  softDeleteEmployee(id:number){
+    return this.http.delete(`${this.baseUrl}/soft/${id}`);
   }
 }

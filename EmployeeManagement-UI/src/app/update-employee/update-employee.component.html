@@ -5,26 +5,49 @@
 
     <div class="form-group">
       <input formControlName="firstName" placeholder="First Name">
+      <small class="text-danger" *ngIf="employeeForm.get('firstName')?.touched
+        && employeeForm.get('firstName')?.errors?.required">
+        First Name is required
+      </small>
+
+      <small class="text-danger" *ngIf="employeeForm.get('firstName')?.errors?.backend">
+        {{ employeeForm.get('firstName')?.errors?.backend }}
+      </small>
     </div>
 
     <div class="form-group">
       <input formControlName="lastName" placeholder="Last Name">
+      <small class="text-danger" *ngIf="employeeForm.get('lastName')?.errors?.backend">
+        {{ employeeForm.get('lastName')?.errors?.backend }}
+      </small>
     </div>
 
     <div class="form-group">
       <input formControlName="email" placeholder="Email">
+      <small class="text-danger" *ngIf="employeeForm.get('email')?.errors?.backend">
+        {{ employeeForm.get('email')?.errors?.backend }}
+      </small>
     </div>
 
     <div class="form-group">
       <input formControlName="phoneNumber" placeholder="Phone Number">
+      <small class="text-danger" *ngIf="employeeForm.get('phoneNumber')?.errors?.backend">
+        {{ employeeForm.get('phoneNumber')?.errors?.backend }}
+      </small>
     </div>
 
     <div class="form-group">
-      <input formControlName="departmentID" placeholder="Department ID">
+      <input formControlName="departmentId" placeholder="Department ID">
+      <small class="text-danger" *ngIf="employeeForm.get('departmentId')?.errors?.backend">
+        {{ employeeForm.get('departmentId')?.errors?.backend }}
+      </small>
     </div>
 
     <div class="form-group">
       <input formControlName="salary" placeholder="Salary">
+      <small class="text-danger" *ngIf="employeeForm.get('salary')?.errors?.backend">
+        {{ employeeForm.get('salary')?.errors?.backend }}
+      </small>
     </div>
 
     <div class="form-group">
@@ -33,13 +56,19 @@
         <option value="ACTIVE">ACTIVE</option>
         <option value="INACTIVE">INACTIVE</option>
       </select>
+      <small class="error" *ngIf="employeeForm.get('status')?.errors?.backend">
+        {{ employeeForm.get('status')?.errors?.backend }}
+      </small>
     </div>
 
     <div class="form-group">
       <input type="date" formControlName="hireDate">
+      <small class="error" *ngIf="employeeForm.get('hireDate')?.errors?.backend">
+        {{ employeeForm.get('hireDate')?.errors?.backend }}
+      </small>
     </div>
 
-    <button type="submit" [disabled]="employeeForm.invalid">
+    <button type="submit">
       Update Employee
     </button>
 

@@ -6,6 +6,7 @@ import com.example.EmployeeManagementSystem.dto.DepartmentResponseDTO;
 import com.example.EmployeeManagementSystem.dto.EmployeeRequestDTO;
 import com.example.EmployeeManagementSystem.dto.EmployeeResponseDTO;
 import com.example.EmployeeManagementSystem.entity.Employee;
+import com.example.EmployeeManagementSystem.entity.EmployeeStatus;
 import com.example.EmployeeManagementSystem.exception.NotFoundException;
 import com.example.EmployeeManagementSystem.repository.EmployeeRepository;
 import com.example.EmployeeManagementSystem.specification.EmployeeSpecification;
@@ -34,7 +35,6 @@ public class EmployeeService {
 
     public List<EmployeeResponseDTO> getAllEmployee(){
         List<Employee> employees = employeeRepository.findAll();
-
 
         return employees.stream().map(employeeMapper::toResponseDTO)
                 .toList();
@@ -111,9 +111,9 @@ public class EmployeeService {
                         .map(employeeMapper::toResponseDTO);
 
         pageResult.forEach(dto -> {
-            if (dto.getDepartmentID() != null) {
+            if (dto.getDepartmentId() != null) {
                 DepartmentResponseDTO dept =
-                        departmentClient.getDepartmentById(dto.getDepartmentID());
+                        departmentClient.getDepartmentById(dto.getDepartmentId());
 
                 dto.setDepartmentName(dept.getName());
                 dto.setDepartmentLocation(dept.getLocation());
@@ -121,6 +121,17 @@ public class EmployeeService {
         });
 
         return pageResult;
+    }
+
+    public String softDelete(Long id){
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException ("Employee does not exist") );
+
+        employee.setStatus(EmployeeStatus.INACTIVE);
+
+        employeeRepository.save(employee);
+
+        return "Id Deactivated";
     }
 
 
